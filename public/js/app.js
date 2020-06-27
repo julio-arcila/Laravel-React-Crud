@@ -67678,29 +67678,16 @@ var Update = /*#__PURE__*/function (_Component) {
       _this.props.handleEvent('update', _this.state.product);
     });
 
-    _defineProperty(_assertThisInitialized(_this), "handleChange", function (e, next) {
+    _defineProperty(_assertThisInitialized(_this), "handleChange", function (e) {
       var target = e.target;
       var value = target.value;
       var name = target.name;
 
-      if (next) {
-        if (Object.keys(next.product).length !== 0) {
-          _this.setState(function () {
-            return {
-              product: _objectSpread(_objectSpread({}, next.product), {}, {
-                creation_date: next.product.creation_date.split(" ")[0],
-                last_sale_date: next.product.last_sale_date.split(" ")[0]
-              })
-            };
-          });
-        }
-      } else {
-        _this.setState(function (prevState) {
-          return {
-            product: _objectSpread(_objectSpread({}, prevState.product), {}, _defineProperty({}, name, value))
-          };
-        });
-      }
+      _this.setState(function (prevState) {
+        return {
+          product: _objectSpread(_objectSpread({}, prevState.product), {}, _defineProperty({}, name, value))
+        };
+      });
     });
 
     _this.state = {
@@ -67722,7 +67709,16 @@ var Update = /*#__PURE__*/function (_Component) {
   _createClass(Update, [{
     key: "componentWillReceiveProps",
     value: function componentWillReceiveProps(nextProps) {
-      this.handleChange(event, nextProps);
+      if (Object.keys(nextProps.product).length !== 0) {
+        this.setState(function () {
+          return {
+            product: _objectSpread(_objectSpread({}, nextProps.product), {}, {
+              creation_date: nextProps.product.creation_date.split(" ")[0],
+              last_sale_date: nextProps.product.last_sale_date.split(" ")[0]
+            })
+          };
+        });
+      }
     }
   }, {
     key: "render",

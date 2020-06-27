@@ -19,7 +19,15 @@ export default class Update extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        this.handleChange(event,nextProps)
+        if (Object.keys(nextProps.product).length !== 0) {
+            this.setState(() => ({
+                product: {
+                    ...nextProps.product,
+                    creation_date: nextProps.product.creation_date.split(" ")[0],
+                    last_sale_date: nextProps.product.last_sale_date.split(" ")[0]
+                }
+            }))
+        }
     }
 
     updateProduct = (e) => {
@@ -27,28 +35,17 @@ export default class Update extends Component {
         this.props.handleEvent('update', this.state.product);
     }
 
-    handleChange = (e, next) => {
+    handleChange = (e) => {
         const target = e.target;
         const value = target.value;
         const name = target.name;
-        if (next){
-            if (Object.keys(next.product).length !== 0){
-                this.setState(() => ({
-                    product: {
-                        ...next.product,
-                        creation_date: next.product.creation_date.split(" ")[0],
-                        last_sale_date: next.product.last_sale_date.split(" ")[0]
-                    }
-                }))
+
+        this.setState((prevState) => ({
+            product: {
+                ...prevState.product,
+                [name]: value
             }
-        }else{
-            this.setState((prevState) => ({
-                product: {
-                    ...prevState.product,
-                    [name]: value
-                }
-            }))
-        }
+        }))
     }
 
 
